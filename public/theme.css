@@ -1,0 +1,179 @@
+:root {
+  --ink: #20241f;
+  --muted: #70766f;
+  --accent: #496c23;
+  --accent-strong: #304b20;
+  --accent-bright: #c9f36b;
+  --accent-soft: #edf4e5;
+  --canvas: #f8f8f2;
+  --surface: #ffffff;
+  --line: #e7e9df;
+  --danger: #a7352b;
+  --danger-soft: #fbecea;
+  --success: #276b3a;
+  --success-soft: #eaf5dd;
+  --warning: #79550b;
+  --warning-soft: #fff3d8;
+  --green: var(--accent-bright);
+  --green-dark: var(--accent-strong);
+  --cream: var(--canvas);
+}
+
+body {
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: "DM Sans", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  font-family: "Manrope", sans-serif;
+  letter-spacing: 0;
+}
+
+.navbar,
+.topbar {
+  background: var(--surface);
+  border-color: var(--line);
+}
+
+.logo,
+.brand,
+.accent,
+.eyebrow,
+.nav-link a,
+.form-footer a,
+.check {
+  color: var(--accent);
+}
+
+.logo-icon,
+.eyebrow,
+.check,
+.note-icon,
+.tag.selected,
+.nav-item:hover,
+.nav-item.active {
+  background: var(--accent-soft);
+}
+
+.tag.selected {
+  border-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+.tag:hover {
+  border-color: var(--accent);
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: var(--accent);
+}
+
+.primary-btn,
+.submit-btn,
+.topbar button {
+  border-color: var(--accent-bright);
+  background: var(--accent-bright);
+  color: var(--ink);
+}
+
+.primary-btn:hover,
+.submit-btn:hover,
+.topbar button:hover {
+  border-color: #b6df58;
+  background: #b6df58;
+  color: var(--ink);
+}
+
+.btn-primary {
+  border-color: var(--accent-bright);
+  background: var(--accent-bright);
+  color: var(--ink);
+}
+
+.btn-primary:hover {
+  background: #b6df58;
+}
+
+.profile-card,
+.form-card,
+.card,
+.conversation-list,
+.conversation-panel,
+.skill-card,
+.step-card {
+  border-color: var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: none;
+}
+
+input,
+textarea,
+select {
+  border-color: var(--line);
+  color: var(--ink);
+  font-family: "DM Sans", sans-serif;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+  outline-color: var(--accent-soft);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.secondary-btn {
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.status-pill.pending {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.status-pill.accepted {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.status-pill.rejected,
+.message.error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.message.error {
+  background: transparent;
+}
+
+.message.success {
+  color: var(--success);
+}
+
+.skill-card p,
+.step-card p,
+.form-subtitle,
+.intro-text,
+.muted-text,
+.empty-state,
+.subtitle,
+.profile-info p,
+.card p {
+  color: var(--muted);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}

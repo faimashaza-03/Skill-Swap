@@ -279,10 +279,212 @@ input:focus, textarea:focus, select:focus {
   margin-bottom: 20px;
 }
 
+#memberSearchForm {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+#memberSearchForm input {
+  flex: 1;
+  min-width: 0;
+}
+
+#memberSearchForm button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .empty-state {
   color: #778398;
   padding: 15px 0;
   line-height: 1.6;
+}
+
+.subsection-heading {
+  margin: 30px 0 14px;
+}
+
+.subsection-heading h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.subsection-heading p,
+.muted-text {
+  color: #778398;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.exchange-card {
+  display: grid;
+  gap: 12px;
+}
+
+.exchange-card h3 {
+  margin: 0;
+}
+
+.exchange-card p {
+  overflow-wrap: anywhere;
+}
+
+.exchange-form {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid #e8edf4;
+  padding-top: 15px;
+}
+
+.exchange-form label,
+.message-form label {
+  display: grid;
+  gap: 6px;
+  color: #43516a;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.exchange-form textarea,
+.message-form textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.skill-list span,
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: #edf4fc;
+  color: #43536b;
+  font-size: 12px;
+}
+
+.status-pill.pending { background: #fff3d8; color: #79550b; }
+.status-pill.accepted { background: #e4f5ea; color: #24633c; }
+.status-pill.rejected { background: #fce9e7; color: #8d3028; }
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.secondary-btn {
+  padding: 10px 14px;
+  border: 1px solid #dce3ed;
+  border-radius: 7px;
+  background: white;
+  color: #43516a;
+}
+
+.conversation-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.conversation-list,
+.conversation-panel {
+  background: white;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.conversation-list h2,
+.conversation-header h2 {
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+
+.conversation-choice {
+  width: 100%;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  padding: 11px;
+  color: #43516a;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.conversation-choice:hover,
+.conversation-choice.active {
+  background: #eaf3ff;
+  color: #1764b8;
+}
+
+.conversation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.message-list {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-height: 230px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 14px 0;
+  border-top: 1px solid #e8edf4;
+  border-bottom: 1px solid #e8edf4;
+}
+
+.message-bubble {
+  max-width: min(80%, 520px);
+  justify-self: start;
+  padding: 10px 12px;
+  border-radius: 10px 10px 10px 2px;
+  background: #f0f3f7;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.message-bubble.mine {
+  justify-self: end;
+  border-radius: 10px 10px 2px 10px;
+  background: #e4f1ff;
+}
+
+.message-meta {
+  display: block;
+  margin-top: 5px;
+  color: #778398;
+  font-size: 11px;
+}
+
+.message-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media (max-width: 760px) {
@@ -313,6 +515,18 @@ input:focus, textarea:focus, select:focus {
     grid-template-columns: 1fr;
   }
 
+  .conversation-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #memberSearchForm {
+    flex-direction: column;
+  }
+
+  #memberSearchForm button {
+    width: 100%;
+  }
+
   .topbar {
     padding: 12px 16px;
   }
@@ -331,6 +545,10 @@ input:focus, textarea:focus, select:focus {
   }
 }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
 </head>
 
 <body>
@@ -457,8 +675,24 @@ input:focus, textarea:focus, select:focus {
     <section id="discover" class="page hidden">
       <h1 class="page-title">Discover Skills</h1>
       <p class="subtitle">
-        Search for a skill from the list or find a custom skill you added.
+        Find people to learn from and skills to explore.
       </p>
+      <div class="subsection-heading">
+        <h2>Find members</h2>
+        <p>Search by name or by a skill someone can teach or wants to learn.</p>
+      </div>
+      <form id="memberSearchForm" class="search-row">
+        <label class="sr-only" for="memberSearch">Search members</label>
+        <input id="memberSearch" type="search"
+          placeholder="Search people, Python, cooking, music...">
+        <button class="primary-btn" type="submit">Search members</button>
+      </form>
+      <div id="memberResults" class="cards" aria-live="polite"></div>
+
+      <div class="subsection-heading">
+        <h2>Browse skills</h2>
+        <p>Explore the catalog and add a skill to your learning interests.</p>
+      </div>
       <div class="search-row">
         <input id="skillSearch" type="search"
           placeholder="Search Python, cooking, music, or any skill...">
@@ -469,27 +703,49 @@ input:focus, textarea:focus, select:focus {
     <section id="connections" class="page hidden">
       <h1 class="page-title">Connections</h1>
       <p class="subtitle">Your learning community.</p>
-      <div class="card">
-        <h3>Your connections</h3>
-        <p>Connection management will be added in a later step.</p>
+      <div class="section-heading">
+        <h2>Your connections</h2>
+        <button class="secondary-btn" id="refreshConnections" type="button">Refresh</button>
       </div>
+      <p id="connectionsStatus" class="status-message" role="status" aria-live="polite"></p>
+      <div id="connectionCards" class="cards"></div>
     </section>
 
     <section id="requests" class="page hidden">
       <h1 class="page-title">Learning Requests</h1>
       <p class="subtitle">Manage learning and teaching requests.</p>
-      <div class="card">
-        <h3>Your requests</h3>
-        <p>Request management will be connected to the server in a later step.</p>
+      <div class="section-heading">
+        <h2>Sent and received</h2>
+        <button class="secondary-btn" id="refreshRequests" type="button">Refresh</button>
       </div>
+      <p id="requestsStatus" class="status-message" role="status" aria-live="polite"></p>
+      <div id="requestCards" class="cards"></div>
     </section>
 
     <section id="messages" class="page hidden">
       <h1 class="page-title">Messages</h1>
       <p class="subtitle">Keep in touch with your learning connections.</p>
-      <div class="card">
-        <h3>Your conversations</h3>
-        <p>Messaging will be added in a later step.</p>
+      <div class="conversation-layout">
+        <aside class="conversation-list">
+          <h2>Conversations</h2>
+          <div id="conversationChoices"></div>
+        </aside>
+        <section class="conversation-panel" aria-label="Conversation">
+          <div class="conversation-header">
+            <h2 id="conversationTitle">Select a connection</h2>
+            <button class="secondary-btn" id="refreshMessages" type="button">Refresh</button>
+          </div>
+          <div id="messageList" class="message-list" role="log" aria-live="polite"></div>
+          <form id="messageForm" class="message-form">
+            <label for="messageText">Your message</label>
+            <textarea id="messageText" maxlength="2000" required
+              placeholder="Write a message..."></textarea>
+            <div class="action-row">
+              <button class="primary-btn" id="sendMessage" type="submit">Send message</button>
+              <p id="messageStatus" class="status-message" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </section>
       </div>
     </section>
   </main>
@@ -559,6 +815,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let profile = readProfile();
+  let connections = [];
+  let selectedConnectionId = "";
 
   function cleanSkills(skills) {
     if (!Array.isArray(skills)) return [];
@@ -615,7 +873,14 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.toggle("active", button.dataset.page === pageId);
     });
 
-    if (pageId === "discover") renderDiscover();
+    if (pageId === "discover") {
+      renderDiscover();
+      loadMembers();
+    }
+    if (pageId === "requests") loadRequests();
+    if (pageId === "connections" || pageId === "messages") {
+      loadConnections();
+    }
   }
 
   document.querySelectorAll("[data-page]").forEach(button => {
@@ -915,6 +1180,521 @@ document.addEventListener("DOMContentLoaded", () => {
       container.appendChild(card);
     });
   }
+
+  async function apiRequest(url, options = {}) {
+    const response = await fetch(url, options);
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.message || "The request could not be completed.");
+    }
+
+    return result;
+  }
+
+  function renderEmpty(container, message) {
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent = message;
+    container.replaceChildren(empty);
+  }
+
+  function idFrom(value) {
+    if (!value) return "";
+    return typeof value === "object" ? String(value._id || "") : String(value);
+  }
+
+  function nameFrom(value) {
+    return value && typeof value === "object" && value.name
+      ? String(value.name)
+      : "SkillSwap member";
+  }
+
+  function appendSkillSummary(container, label, skills) {
+    const row = document.createElement("p");
+    const heading = document.createElement("strong");
+    heading.textContent = label + ": ";
+    row.appendChild(heading);
+    row.appendChild(
+      document.createTextNode(
+        Array.isArray(skills) && skills.length ? skills.join(", ") : "Not listed"
+      )
+    );
+    container.appendChild(row);
+  }
+
+  function addSkillInput(form, labelText, name, skills, initialValue, listId) {
+    const label = document.createElement("label");
+    label.textContent = labelText;
+
+    const input = document.createElement("input");
+    input.name = name;
+    input.type = "text";
+    input.maxLength = 100;
+    input.required = true;
+    input.placeholder = "Enter a skill";
+    input.value = initialValue || "";
+
+    if (skills.length) {
+      const list = document.createElement("datalist");
+      list.id = listId;
+      skills.forEach(skill => {
+        const option = document.createElement("option");
+        option.value = skill;
+        list.appendChild(option);
+      });
+      input.setAttribute("list", listId);
+      form.appendChild(list);
+    }
+
+    label.appendChild(input);
+    form.appendChild(label);
+    return input;
+  }
+
+  let requestFormCounter = 0;
+
+  function renderMemberCard(member) {
+    const card = document.createElement("article");
+    card.className = "card exchange-card";
+
+    const heading = document.createElement("h3");
+    heading.textContent = member.name || "SkillSwap member";
+
+    const bio = document.createElement("p");
+    bio.textContent = member.bio || "This member has not added a bio yet.";
+
+    card.append(heading, bio);
+    appendSkillSummary(card, "Can teach", member.skillsToTeach);
+    appendSkillSummary(card, "Wants to learn", member.skillsToLearn);
+
+    const actionRow = document.createElement("div");
+    actionRow.className = "action-row";
+
+    const requestButton = document.createElement("button");
+    requestButton.type = "button";
+    requestButton.className = "primary-btn";
+    requestButton.textContent = "Request a skill swap";
+    actionRow.appendChild(requestButton);
+
+    const form = document.createElement("form");
+    form.className = "exchange-form hidden";
+
+    const formIndex = requestFormCounter++;
+    addSkillInput(
+      form,
+      "Skill you can teach",
+      "skillOffered",
+      cleanSkills(profile.teach),
+      profile.teach[0],
+      "offered-skills-" + formIndex
+    );
+    addSkillInput(
+      form,
+      "Skill you want to learn",
+      "skillWanted",
+      cleanSkills(member.skillsToTeach),
+      member.skillsToTeach && member.skillsToTeach[0],
+      "wanted-skills-" + formIndex
+    );
+
+    const messageLabel = document.createElement("label");
+    messageLabel.textContent = "Introductory message (optional)";
+    const messageInput = document.createElement("textarea");
+    messageInput.name = "message";
+    messageInput.maxLength = 500;
+    messageInput.placeholder = "Tell them what you would like to exchange.";
+    messageLabel.appendChild(messageInput);
+
+    const submit = document.createElement("button");
+    submit.type = "submit";
+    submit.className = "primary-btn";
+    submit.textContent = "Send request";
+
+    const status = document.createElement("p");
+    status.className = "status-message";
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+
+    form.append(messageLabel, submit, status);
+    requestButton.addEventListener("click", () => {
+      form.classList.toggle("hidden");
+      if (!form.classList.contains("hidden")) {
+        form.querySelector("input").focus();
+      }
+    });
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      submit.disabled = true;
+      status.textContent = "Sending request...";
+
+      try {
+        await apiRequest("/api/requests", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            senderId: userId,
+            receiverId: idFrom(member),
+            skillOffered: form.elements.skillOffered.value.trim(),
+            skillWanted: form.elements.skillWanted.value.trim(),
+            message: form.elements.message.value.trim()
+          })
+        });
+
+        status.textContent = "Request sent.";
+        submit.textContent = "Request sent";
+        await loadRequests();
+      } catch (error) {
+        status.textContent = error.message;
+        submit.disabled = false;
+      }
+    });
+
+    card.append(actionRow, form);
+    return card;
+  }
+
+  async function loadMembers() {
+    const container = document.getElementById("memberResults");
+
+    if (!validUserId) {
+      renderEmpty(container, "Your account could not be verified. Please log in again.");
+      return;
+    }
+
+    renderEmpty(container, "Searching members...");
+
+    const params = new URLSearchParams({ exclude: userId });
+    const search = document.getElementById("memberSearch").value.trim();
+    if (search) params.set("search", search);
+
+    try {
+      const result = await apiRequest("/api/users?" + params.toString());
+      const members = Array.isArray(result.users) ? result.users : [];
+
+      if (!members.length) {
+        renderEmpty(container, "No members found. Try a different name or skill.");
+        return;
+      }
+
+      container.replaceChildren(...members.map(renderMemberCard));
+    } catch (error) {
+      renderEmpty(container, error.message);
+    }
+  }
+
+  function requestPerson(request, incoming) {
+    return incoming ? request.sender : request.receiver;
+  }
+
+  function renderRequestCard(request) {
+    const incoming = idFrom(request.receiver) === userId;
+    const other = requestPerson(request, incoming);
+    const card = document.createElement("article");
+    card.className = "card exchange-card";
+
+    const heading = document.createElement("h3");
+    heading.textContent = (incoming ? "From " : "To ") + nameFrom(other);
+
+    const status = document.createElement("span");
+    const requestStatus = ["pending", "accepted", "rejected"].includes(request.status)
+      ? request.status
+      : "pending";
+    status.className = "status-pill " + requestStatus;
+    status.textContent = requestStatus;
+
+    const exchange = document.createElement("p");
+    exchange.textContent =
+      "Offers " + (request.skillOffered || "a skill") +
+      " in exchange for " + (request.skillWanted || "a skill") + ".";
+
+    const message = document.createElement("p");
+    message.textContent = request.message || "No introductory message.";
+
+    const cardHeader = document.createElement("div");
+    cardHeader.className = "action-row";
+    cardHeader.append(heading, status);
+    card.append(cardHeader, exchange, message);
+
+    if (incoming && requestStatus === "pending") {
+      const actions = document.createElement("div");
+      actions.className = "action-row";
+
+      ["accepted", "rejected"].forEach(nextStatus => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = nextStatus === "accepted" ? "primary-btn" : "secondary-btn";
+        button.textContent = nextStatus === "accepted" ? "Accept" : "Reject";
+        button.addEventListener("click", () => respondToRequest(request._id, nextStatus, button));
+        actions.appendChild(button);
+      });
+
+      card.appendChild(actions);
+    }
+
+    return card;
+  }
+
+  async function loadRequests() {
+    const container = document.getElementById("requestCards");
+    const status = document.getElementById("requestsStatus");
+
+    if (!validUserId) {
+      status.textContent = "Your account could not be verified. Please log in again.";
+      renderEmpty(container, status.textContent);
+      return;
+    }
+
+    status.textContent = "Loading requests...";
+
+    try {
+      const result = await apiRequest("/api/requests/" + encodeURIComponent(userId));
+      const requests = Array.isArray(result.requests) ? result.requests : [];
+      status.textContent = requests.length
+        ? "" : "No learning requests yet. Discover members to start an exchange.";
+
+      if (requests.length) {
+        container.replaceChildren(...requests.map(renderRequestCard));
+      } else {
+        renderEmpty(container, status.textContent);
+      }
+    } catch (error) {
+      status.textContent = error.message;
+      renderEmpty(container, error.message);
+    }
+  }
+
+  async function respondToRequest(requestId, status, button) {
+    button.disabled = true;
+
+    try {
+      await apiRequest("/api/requests/" + encodeURIComponent(requestId), {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, status })
+      });
+
+      await loadRequests();
+      await loadConnections();
+    } catch (error) {
+      document.getElementById("requestsStatus").textContent = error.message;
+      button.disabled = false;
+    }
+  }
+
+  function connectionPerson(connection) {
+    const people = Array.isArray(connection.users) ? connection.users : [];
+    return people.find(person => idFrom(person) !== userId) || people[0];
+  }
+
+  function renderConnectionCard(connection) {
+    const other = connectionPerson(connection);
+    const card = document.createElement("article");
+    card.className = "card exchange-card";
+
+    const heading = document.createElement("h3");
+    heading.textContent = nameFrom(other);
+    const bio = document.createElement("p");
+    bio.textContent = other && other.bio ? other.bio : "Connected through a skill exchange.";
+    card.append(heading, bio);
+    appendSkillSummary(card, "Can teach", other && other.skillsToTeach);
+    appendSkillSummary(card, "Wants to learn", other && other.skillsToLearn);
+
+    const messageButton = document.createElement("button");
+    messageButton.type = "button";
+    messageButton.className = "primary-btn";
+    messageButton.textContent = "Open conversation";
+    messageButton.addEventListener("click", () => {
+      selectedConnectionId = idFrom(connection);
+      showPage("messages");
+    });
+
+    card.appendChild(messageButton);
+    return card;
+  }
+
+  function renderConversationChoices() {
+    const container = document.getElementById("conversationChoices");
+    container.replaceChildren();
+
+    if (!connections.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty-state";
+      empty.textContent = "Accept a request to start a conversation.";
+      container.appendChild(empty);
+      return;
+    }
+
+    connections.forEach(connection => {
+      const other = connectionPerson(connection);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "conversation-choice" +
+        (idFrom(connection) === selectedConnectionId ? " active" : "");
+      button.textContent = nameFrom(other);
+      button.addEventListener("click", () => {
+        selectedConnectionId = idFrom(connection);
+        renderConversationChoices();
+        loadMessages(selectedConnectionId);
+      });
+      container.appendChild(button);
+    });
+  }
+
+  async function loadConnections() {
+    const container = document.getElementById("connectionCards");
+    const status = document.getElementById("connectionsStatus");
+
+    if (!validUserId) {
+      status.textContent = "Your account could not be verified. Please log in again.";
+      renderEmpty(container, status.textContent);
+      return;
+    }
+
+    status.textContent = "Loading connections...";
+
+    try {
+      const result = await apiRequest("/api/connections/" + encodeURIComponent(userId));
+      connections = Array.isArray(result.connections) ? result.connections : [];
+
+      if (!connections.some(connection => idFrom(connection) === selectedConnectionId)) {
+        selectedConnectionId = connections.length ? idFrom(connections[0]) : "";
+      }
+
+      status.textContent = connections.length
+        ? "" : "No connections yet. Accept a learning request to connect.";
+      if (connections.length) {
+        container.replaceChildren(...connections.map(renderConnectionCard));
+      } else {
+        renderEmpty(container, status.textContent);
+      }
+
+      renderConversationChoices();
+
+      const messagesPage = document.getElementById("messages");
+      if (messagesPage && !messagesPage.classList.contains("hidden")) {
+        await loadMessages(selectedConnectionId);
+      }
+    } catch (error) {
+      status.textContent = error.message;
+      renderEmpty(container, error.message);
+      connections = [];
+      renderConversationChoices();
+    }
+  }
+
+  function renderMessages(messages) {
+    const container = document.getElementById("messageList");
+    container.replaceChildren();
+
+    if (!messages.length) {
+      renderEmpty(container, "No messages yet. Start the conversation.");
+      return;
+    }
+
+    messages.forEach(message => {
+      const bubble = document.createElement("div");
+      bubble.className = "message-bubble" +
+        (idFrom(message.sender) === userId ? " mine" : "");
+
+      const text = document.createElement("div");
+      text.textContent = message.text || "";
+
+      const meta = document.createElement("small");
+      meta.className = "message-meta";
+      const timestamp = message.createdAt ? new Date(message.createdAt) : null;
+      meta.textContent = nameFrom(message.sender) +
+        (timestamp && !Number.isNaN(timestamp.getTime())
+          ? " · " + timestamp.toLocaleString()
+          : "");
+
+      bubble.append(text, meta);
+      container.appendChild(bubble);
+    });
+
+    container.scrollTop = container.scrollHeight;
+  }
+
+  async function loadMessages(connectionId = selectedConnectionId) {
+    const list = document.getElementById("messageList");
+    const form = document.getElementById("messageForm");
+    const sendButton = document.getElementById("sendMessage");
+    const status = document.getElementById("messageStatus");
+    const connection = connections.find(item => idFrom(item) === connectionId);
+
+    document.getElementById("conversationTitle").textContent = connection
+      ? nameFrom(connectionPerson(connection))
+      : "Select a connection";
+
+    if (!connectionId) {
+      renderEmpty(list, "Choose a connection to view messages.");
+      form.querySelector("textarea").disabled = true;
+      sendButton.disabled = true;
+      status.textContent = "";
+      return;
+    }
+
+    form.querySelector("textarea").disabled = false;
+    sendButton.disabled = false;
+    status.textContent = "Loading messages...";
+
+    try {
+      const params = new URLSearchParams({ userId });
+      const result = await apiRequest(
+        "/api/connections/" + encodeURIComponent(connectionId) +
+        "/messages?" + params.toString()
+      );
+      renderMessages(Array.isArray(result.messages) ? result.messages : []);
+      status.textContent = "";
+    } catch (error) {
+      renderEmpty(list, error.message);
+      status.textContent = error.message;
+    }
+  }
+
+  document.getElementById("memberSearchForm").addEventListener("submit", event => {
+    event.preventDefault();
+    loadMembers();
+  });
+
+  document.getElementById("refreshRequests").addEventListener("click", loadRequests);
+  document.getElementById("refreshConnections").addEventListener("click", loadConnections);
+  document.getElementById("refreshMessages").addEventListener("click", () => {
+    loadMessages(selectedConnectionId);
+  });
+
+  document.getElementById("messageForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    const input = document.getElementById("messageText");
+    const sendButton = document.getElementById("sendMessage");
+    const status = document.getElementById("messageStatus");
+    const text = input.value.trim();
+
+    if (!selectedConnectionId || !text) return;
+
+    sendButton.disabled = true;
+    status.textContent = "Sending message...";
+
+    try {
+      await apiRequest(
+        "/api/connections/" + encodeURIComponent(selectedConnectionId) + "/messages",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ senderId: userId, text })
+        }
+      );
+
+      input.value = "";
+      status.textContent = "";
+      await loadMessages(selectedConnectionId);
+    } catch (error) {
+      status.textContent = error.message;
+    } finally {
+      sendButton.disabled = !selectedConnectionId;
+    }
+  });
 
   document.getElementById("skillSearch").addEventListener("input", renderDiscover);
 

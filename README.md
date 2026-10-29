@@ -8,10 +8,13 @@ SkillSwap Hub is a web app for sharing skills with a community. Members can crea
 - Login and a browser dashboard for signed-in users.
 - Profile bio and lists of skills to teach and learn.
 - A built-in skill catalog, custom skill entry, and skill search.
+- Member search by name or skill, with skill-swap request composition.
+- Sent and received request management, including accepting and rejecting requests.
+- Accepted connections and direct conversations with message history.
 - MongoDB-backed API endpoints for member discovery, exchange requests, connections, and messages.
 - Render Blueprint configuration in `render.yaml`.
 
-The dashboard currently implements account access, profile editing, and local skill discovery. The Requests, Connections, and Messages dashboard sections are placeholders; the related API endpoints exist but are not yet wired into those screens. The dashboard's availability selection is stored in the browser and is not part of the MongoDB profile.
+The dashboard implements account access, profile editing, member discovery, requests, connections, and messaging. Its availability selection is stored in the browser and is not part of the MongoDB profile. Authentication is a prototype; see [Security and Current Limitations](#security-and-current-limitations).
 
 ## Technology
 
@@ -25,19 +28,37 @@ The dashboard currently implements account access, profile editing, and local sk
 
 ```text
 .
+├── app.js                  # Express middleware and static frontend
+├── config/
+│   └── database.js         # MongoDB connection and lifecycle handlers
+├── controllers/            # HTTP request handlers grouped by feature
+│   ├── authController.js
+│   ├── connectionController.js
+│   ├── healthController.js
+│   ├── memberController.js
+│   ├── profileController.js
+│   └── requestController.js
+├── middleware/
+│   └── requireDatabase.js  # Database availability gate
 ├── models/                 # Mongoose schemas for users, requests, connections, and messages
-├── public/                 # Static pages, styles, and browser scripts
+├── public/                 # Static pages and shared styles
 │   ├── dashboard.html
 │   ├── index.html
 │   ├── login.html
 │   ├── signup.html
-│   ├── script.js
-│   └── style.css
+│   ├── style.css
+│   └── theme.css
 ├── render.yaml             # Render web service Blueprint
-├── server.js               # Express app, API routes, and MongoDB connection
+├── routes/
+│   └── apiRoutes.js         # API paths mapped to controllers
+├── server.js               # Runtime startup and graceful shutdown
+├── test/
+│   └── api.test.js          # API and middleware smoke tests
 ├── package.json
 └── package-lock.json
 ```
+
+The backend follows MVC boundaries: `models/` defines persisted data, `controllers/` handles request behavior, and `routes/` maps HTTP paths to controller methods. `app.js` configures Express, while `server.js` starts and stops the application.
 
 ## Run Locally
 
@@ -76,6 +97,16 @@ The server can serve the frontend when MongoDB is unavailable, but signup, login
 | `NODE_ENV` | No | Set to `production` when deployed. |
 
 The app loads `.env` with `dotenv` for local development. On Render, configure these values in the service's **Environment** settings. Keep the MongoDB URI secret.
+
+## Tests
+
+Run the API and middleware smoke tests with:
+
+```sh
+npm test
+```
+
+These tests cover the health endpoint, unknown API route response, and database availability middleware without requiring a live MongoDB instance.
 
 ## API Reference
 
@@ -120,5 +151,3 @@ The health endpoint reports HTTP success even when MongoDB is disconnected; insp
 ## Security and Current Limitations
 
 This project is still a prototype. Login returns the user profile to the browser, which stores it in `sessionStorage`; the server does not currently establish a server-side session or issue a signed token. User-specific API routes accept user IDs from the client and do not authenticate those IDs against a trusted session. Do not rely on these checks to protect real user accounts or private data. Before public production use, add authentication and authorization on the server for every user-specific operation, along with appropriate rate limiting and account recovery protections.
-
-The `npm test` script is currently a placeholder; no automated project test suite is configured yet.

@@ -1,13 +1,4 @@
 
-:root {
-  --ink: #20241f;
-  --muted: #70766f;
-  --green: #c9f36b;
-  --green-dark: #304b20;
-  --cream: #f8f8f2;
-  --line: #e7e9df;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -262,7 +253,6 @@ h1 span, .section-heading h2 span, .how-section h2 span { color: #71963d; }
 .note-top { top: 12px; right: -12px; }
 .note-bottom { bottom: 10px; left: -20px; }
 .note-icon, .success-icon { display: grid; place-items: center; width: 33px; height: 33px; border-radius: 9px; font-size: 17px; }
-.purple { background: #eee7fb; color: #8762b3; }
 .success-icon { background: #eaf5dd; color: #5a8b2c; }
 .floating-note strong, .floating-note small { display: block; }
 .floating-note strong { font-size: 10px; }
@@ -292,6 +282,7 @@ h1 span, .section-heading h2 span, .how-section h2 span { color: #71963d; }
 .code-card { background: #f3f8ef; }
 .language-card { background: #f6f3fc; }
 .music-card { background: #fbf4f1; }
+.design-card, .code-card, .language-card, .music-card { background: #f3f5ed; }
 .skill-emoji { display: grid; place-items: center; width: 51px; height: 51px; background: #fff; border-radius: 13px; font-size: 25px; margin-bottom: 22px; }
 .category-label { font-size: 9px; letter-spacing: 1px; font-weight: 800; color: #77856a; }
 .skill-card h3 { font-size: 18px; margin: 9px 0; letter-spacing: -.5px; }
