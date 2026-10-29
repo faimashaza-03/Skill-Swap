@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: skill-swap-hub
+    runtime: node
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/test
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
