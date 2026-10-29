@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillSwap Hub | Dashboard</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #263248;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.topbar {
+  min-height: 68px;
+  background: white;
+  border-bottom: 1px solid #e4e9f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 32px;
+}
+
+.brand {
+  font-size: 23px;
+  font-weight: bold;
+  color: #2878d0;
+}
+
+.primary-btn, .topbar button {
+  background: #2878d0;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 11px 18px;
+}
+
+.primary-btn:hover, .topbar button:hover {
+  background: #1764b8;
+}
+
+.layout {
+  display: flex;
+  min-height: calc(100vh - 68px);
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: white;
+  border-right: 1px solid #e4e9f0;
+  padding: 25px 14px;
+}
+
+.nav-item {
+  display: block;
+  width: 100%;
+  padding: 13px 15px;
+  margin-bottom: 7px;
+  border: none;
+  border-radius: 8px;
+  text-align: left;
+  background: transparent;
+  color: #59677c;
+}
+
+.nav-item:hover, .nav-item.active {
+  background: #eaf3ff;
+  color: #2878d0;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+}
+
+.page-title {
+  font-size: 28px;
+  margin-bottom: 9px;
+}
+
+.subtitle {
+  color: #778398;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  border: 1px solid #e8edf4;
+  border-radius: 13px;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.avatar {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #dcecff;
+  color: #2878d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 29px;
+  font-weight: bold;
+}
+
+.profile-info h2 {
+  margin-bottom: 8px;
+}
+
+.profile-info p, .card p {
+  color: #778398;
+  line-height: 1.6;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 27px 0 15px;
+}
+
+.section-heading h2 {
+  font-size: 20px;
+}
+
+.text-btn {
+  color: #2878d0;
+  background: transparent;
+  border: none;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.tag {
+  border: 1px solid #dce6f3;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 20px;
+  color: #43536b;
+}
+
+.tag:hover {
+  border-color: #2878d0;
+}
+
+.tag.selected {
+  background: #2878d0;
+  color: white;
+  border-color: #2878d0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+  padding: 22px;
+  min-width: 0;
+}
+
+.card h3 {
+  margin-bottom: 11px;
+}
+
+.card p {
+  font-size: 14px;
+  margin-bottom: 17px;
+}
+
+.card .primary-btn {
+  padding: 10px 14px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce3ed;
+  border-radius: 7px;
+  background: white;
+  color: #263248;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid #b9d8ff;
+  border-color: #2878d0;
+}
+
+.form-group {
+  margin-bottom: 19px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.skill-editor {
+  margin: 16px 0 25px;
+}
+
+.skill-editor h3 {
+  margin-bottom: 8px;
+}
+
+.help-text, .notice {
+  color: #778398;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 9px 0 13px;
+}
+
+.custom-skill-row {
+  display: flex;
+  gap: 9px;
+  margin: 12px 0 16px;
+}
+
+.custom-skill-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.custom-skill-row button {
+  flex-shrink: 0;
+}
+
+.status-message {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.search-row {
+  margin-bottom: 20px;
+}
+
+.empty-state {
+  color: #778398;
+  padding: 15px 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    border-right: none;
+    border-bottom: 1px solid #e4e9f0;
+  }
+
+  .nav-item {
+    width: auto;
+    white-space: nowrap;
+    margin: 0 5px 0 0;
+  }
+
+  main {
+    padding: 22px 15px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    padding: 12px 16px;
+  }
+
+  .profile-card {
+    align-items: flex-start;
+    padding: 18px;
+  }
+
+  .custom-skill-row {
+    flex-wrap: wrap;
+  }
+
+  .custom-skill-row input {
+    flex-basis: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="brand">SkillSwap Hub</div>
+  <button id="logoutButton" type="button">Log Out</button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <button class="nav-item active" data-page="overview">⌂ Overview</button>
+    <button class="nav-item" data-page="profile">♙ My Profile</button>
+    <button class="nav-item" data-page="discover">⌕ Discover Skills</button>
+    <button class="nav-item" data-page="connections">♧ Connections</button>
+    <button class="nav-item" data-page="requests">✉ Requests</button>
+    <button class="nav-item" data-page="messages">☏ Messages</button>
+  </aside>
+
+  <main>
+    <section id="overview" class="page">
+      <h1 class="page-title">
+        Welcome, <span id="userName">Learner</span>!
+      </h1>
+
+      <p class="subtitle">
+        Share what you know. Learn what you want.
+        Connect with your community.
+      </p>
+
+      <div class="profile-card">
+        <div class="avatar" id="avatar">S</div>
+        <div class="profile-info">
+          <h2 id="profileName">Your Profile</h2>
+          <p>SkillSwap Hub member</p>
+          <p>Discover people to learn and share skills with.</p>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2>Skills I Can Teach</h2>
+        <button class="text-btn" data-goto="profile">+ Manage skills</button>
+      </div>
+      <div id="teachTags" class="skill-tags"></div>
+
+      <div class="section-heading">
+        <h2>Skills I Want to Learn</h2>
+        <button class="text-btn" data-goto="profile">+ Add interests</button>
+      </div>
+      <div id="learnTags" class="skill-tags"></div>
+
+      <div class="section-heading">
+        <h2>Explore SkillSwap Hub</h2>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <h3>Discover Skills</h3>
+          <p>Explore skills and find something new to learn.</p>
+          <button class="primary-btn" data-goto="discover">Explore skills</button>
+        </article>
+
+        <article class="card">
+          <h3>Build Your Profile</h3>
+          <p>Choose existing skills or add your own ideas.</p>
+          <button class="primary-btn" data-goto="profile">Edit profile</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="profile" class="page hidden">
+      <h1 class="page-title">My Profile</h1>
+      <p class="subtitle">
+        Tell the community about yourself and your skills.
+      </p>
+
+      <div class="card">
+        <div class="form-group">
+          <label for="bio">About me</label>
+          <textarea id="bio" rows="3"
+            placeholder="Write a short introduction..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="availability">Availability</label>
+          <select id="availability">
+            <option value="Flexible">Flexible</option>
+            <option value="Weekdays">Weekdays</option>
+            <option value="Weekends">Weekends</option>
+            <option value="Evenings">Evenings</option>
+          </select>
+        </div>
+
+        <div class="skill-editor">
+          <h3>Skills I Can Teach</h3>
+          <p class="help-text">
+            Select any options below, or type a skill that is missing.
+          </p>
+          <div id="teachChoices" class="skill-tags"></div>
+          <div class="custom-skill-row">
+            <input id="customTeach" type="text" maxlength="60"
+              placeholder="Type your own teaching skill">
+            <button class="primary-btn" type="button" id="addTeach">+ Add Skill</button>
+          </div>
+        </div>
+
+        <div class="skill-editor">
+          <h3>Skills I Want to Learn</h3>
+          <p class="help-text">
+            Choose from the list or enter anything else you want to learn.
+          </p>
+          <div id="learnChoices" class="skill-tags"></div>
+          <div class="custom-skill-row">
+            <input id="customLearn" type="text" maxlength="60"
+              placeholder="Type a skill you want to learn">
+            <button class="primary-btn" type="button" id="addLearn">+ Add Skill</button>
+          </div>
+        </div>
+
+        <button class="primary-btn" id="saveProfile" type="button">Save Profile</button>
+        <p id="profileMessage" class="status-message" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="discover" class="page hidden">
+      <h1 class="page-title">Discover Skills</h1>
+      <p class="subtitle">
+        Search for a skill from the list or find a custom skill you added.
+      </p>
+      <div class="search-row">
+        <input id="skillSearch" type="search"
+          placeholder="Search Python, cooking, music, or any skill...">
+      </div>
+      <div id="discoverCards" class="cards"></div>
+    </section>
+
+    <section id="connections" class="page hidden">
+      <h1 class="page-title">Connections</h1>
+      <p class="subtitle">Your learning community.</p>
+      <div class="card">
+        <h3>Your connections</h3>
+        <p>Connection management will be added in a later step.</p>
+      </div>
+    </section>
+
+    <section id="requests" class="page hidden">
+      <h1 class="page-title">Learning Requests</h1>
+      <p class="subtitle">Manage learning and teaching requests.</p>
+      <div class="card">
+        <h3>Your requests</h3>
+        <p>Request management will be connected to the server in a later step.</p>
+      </div>
+    </section>
+
+    <section id="messages" class="page hidden">
+      <h1 class="page-title">Messages</h1>
+      <p class="subtitle">Keep in touch with your learning connections.</p>
+      <div class="card">
+        <h3>Your conversations</h3>
+        <p>Messaging will be added in a later step.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+"use strict";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const savedUser = sessionStorage.getItem("skillSwapUser");
+
+  if (!savedUser) {
+    window.location.replace("login.html");
+    return;
+  }
+
+  let user;
+
+  try {
+    user = JSON.parse(savedUser);
+
+    if (!user || typeof user !== "object") {
+      throw new Error("Invalid user session");
+    }
+  } catch {
+    sessionStorage.removeItem("skillSwapUser");
+    window.location.replace("login.html");
+    return;
+  }
+
+  const userId = String(user.id || "");
+  const validUserId = /^[a-f\d]{24}$/i.test(userId);
+
+  const availableSkills = [
+    "HTML", "CSS", "JavaScript", "Python", "Java",
+    "C Programming", "C++", "Web Development",
+    "Graphic Design", "Drawing", "Photography",
+    "Public Speaking", "Cooking", "Video Editing",
+    "UI/UX Design", "Canva", "English", "Mathematics",
+    "Machine Learning", "Artificial Intelligence",
+    "Data Analysis", "Excel", "Digital Marketing",
+    "Content Writing", "Creative Writing", "Music",
+    "Guitar", "Singing", "Dancing", "Chess",
+    "Science", "Physics", "Chemistry", "Biology",
+    "Communication", "Presentation Skills",
+    "Project Management", "Cybersecurity",
+    "App Development", "Robotics", "3D Modelling",
+    "Animation", "Gardening", "Baking", "Knitting",
+    "Foreign Languages", "Time Management"
+  ];
+
+  const storageKey =
+    "skillSwapProfile_" + (userId || user.email || "guest");
+
+  function readProfile() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+
+      if (!saved || typeof saved !== "object" || Array.isArray(saved)) {
+        return {};
+      }
+
+      return saved;
+    } catch {
+      return {};
+    }
+  }
+
+  let profile = readProfile();
+
+  function cleanSkills(skills) {
+    if (!Array.isArray(skills)) return [];
+
+    const result = [];
+    const seen = new Set();
+
+    skills.forEach(skill => {
+      if (typeof skill !== "string") return;
+
+      const cleaned = skill.trim().slice(0, 60);
+      const key = cleaned.toLocaleLowerCase();
+
+      if (cleaned && !seen.has(key) && result.length < 100) {
+        seen.add(key);
+        result.push(cleaned);
+      }
+    });
+
+    return result;
+  }
+
+  profile.teach = cleanSkills(profile.teach);
+  profile.learn = cleanSkills(profile.learn);
+  profile.bio = typeof profile.bio === "string"
+    ? profile.bio.slice(0, 1000)
+    : "";
+
+  profile.availability = profile.availability || "Flexible";
+
+  function setText(id, value) {
+    document.getElementById(id).textContent = value;
+  }
+
+  const displayName =
+    typeof user.name === "string" && user.name.trim()
+      ? user.name.trim()
+      : "Learner";
+
+  setText("userName", displayName);
+  setText("profileName", displayName);
+  setText("avatar", displayName.charAt(0).toUpperCase());
+
+  function showPage(pageId) {
+    const target = document.getElementById(pageId);
+
+    if (!target || !target.classList.contains("page")) return;
+
+    document.querySelectorAll(".page").forEach(page => {
+      page.classList.toggle("hidden", page.id !== pageId);
+    });
+
+    document.querySelectorAll(".nav-item").forEach(button => {
+      button.classList.toggle("active", button.dataset.page === pageId);
+    });
+
+    if (pageId === "discover") renderDiscover();
+  }
+
+  document.querySelectorAll("[data-page]").forEach(button => {
+    button.addEventListener("click", () => {
+      showPage(button.dataset.page);
+    });
+  });
+
+  document.querySelectorAll("[data-goto]").forEach(button => {
+    button.addEventListener("click", () => {
+      showPage(button.dataset.goto);
+    });
+  });
+
+  function renderTags(containerId, skills) {
+    const container = document.getElementById(containerId);
+    container.replaceChildren();
+
+    if (!skills.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty-state";
+      empty.textContent =
+        "No skills added yet. Add your first skill in My Profile.";
+
+      container.appendChild(empty);
+      return;
+    }
+
+    skills.forEach(skill => {
+      const tag = document.createElement("span");
+      tag.className = "tag selected";
+      tag.textContent = skill;
+      container.appendChild(tag);
+    });
+  }
+
+  function renderChoices(containerId, type) {
+    const container = document.getElementById(containerId);
+    const selected = profile[type];
+
+    container.replaceChildren();
+
+    cleanSkills([...availableSkills, ...selected]).forEach(skill => {
+      const button = document.createElement("button");
+      button.type = "button";
+
+      const isSelected = selected.some(item =>
+        item.toLowerCase() === skill.toLowerCase()
+      );
+
+      button.className = "tag" + (isSelected ? " selected" : "");
+      button.textContent = skill;
+      button.setAttribute("aria-pressed", String(isSelected));
+
+      button.addEventListener("click", () => {
+        const index = selected.findIndex(item =>
+          item.toLowerCase() === skill.toLowerCase()
+        );
+
+        if (index >= 0) {
+          selected.splice(index, 1);
+        } else if (selected.length < 100) {
+          selected.push(skill);
+        }
+
+        renderProfile();
+        renderDiscover();
+      });
+
+      container.appendChild(button);
+    });
+  }
+
+  function renderProfile() {
+    renderTags("teachTags", profile.teach);
+    renderTags("learnTags", profile.learn);
+
+    renderChoices("teachChoices", "teach");
+    renderChoices("learnChoices", "learn");
+
+    document.getElementById("bio").value = profile.bio || "";
+
+    document.getElementById("availability").value =
+      profile.availability || "Flexible";
+  }
+
+  function addCustomSkill(type) {
+    const inputId =
+      type === "teach" ? "customTeach" : "customLearn";
+
+    const input = document.getElementById(inputId);
+    const skill = input.value.trim().slice(0, 60);
+
+    if (!skill) {
+      setText("profileMessage", "Please type a skill first.");
+      input.focus();
+      return;
+    }
+
+    const exists = profile[type].some(item =>
+      item.toLowerCase() === skill.toLowerCase()
+    );
+
+    if (exists) {
+      setText("profileMessage", "That skill has already been added.");
+      input.focus();
+      return;
+    }
+
+    if (profile[type].length >= 100) {
+      setText(
+        "profileMessage",
+        "You can add up to 100 skills in this list."
+      );
+      return;
+    }
+
+    profile[type].push(skill);
+    input.value = "";
+
+    renderProfile();
+    renderDiscover();
+
+    setText(
+      "profileMessage",
+      '"' + skill + '" added. Click Save Profile to save it to MongoDB.'
+    );
+  }
+
+  document.getElementById("addTeach").addEventListener("click", () => {
+    addCustomSkill("teach");
+  });
+
+  document.getElementById("addLearn").addEventListener("click", () => {
+    addCustomSkill("learn");
+  });
+
+  document.getElementById("customTeach").addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addCustomSkill("teach");
+    }
+  });
+
+  document.getElementById("customLearn").addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addCustomSkill("learn");
+    }
+  });
+
+  document.getElementById("saveProfile").addEventListener("click", async () => {
+    profile.bio = document.getElementById("bio").value.trim().slice(0, 1000);
+    profile.availability = document.getElementById("availability").value;
+
+    const saveButton = document.getElementById("saveProfile");
+    saveButton.disabled = true;
+
+    setText("profileMessage", "Saving profile to MongoDB...");
+
+    try {
+      if (!validUserId) {
+        throw new Error(
+          "Your user ID is missing or invalid. Please log out and log in again."
+        );
+      }
+
+      const response = await fetch(
+        `/api/profile/${encodeURIComponent(userId)}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            bio: profile.bio,
+            teach: profile.teach,
+            learn: profile.learn
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Could not save profile.");
+      }
+
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(profile));
+      } catch (storageError) {
+        console.warn("Local backup could not be saved:", storageError);
+      }
+
+      setText("profileMessage", "Profile saved successfully to MongoDB!");
+    } catch (error) {
+      console.error("Save profile error:", error);
+
+      setText(
+        "profileMessage",
+        error.message || "Could not save profile. Check the server and try again."
+      );
+    } finally {
+      saveButton.disabled = false;
+    }
+  });
+
+  function renderDiscover() {
+    const query = document
+      .getElementById("skillSearch")
+      .value.trim()
+      .toLowerCase();
+
+    const container = document.getElementById("discoverCards");
+    container.replaceChildren();
+
+    const allSkills = cleanSkills([
+      ...availableSkills,
+      ...profile.teach,
+      ...profile.learn
+    ]);
+
+    const filtered = allSkills.filter(skill =>
+      skill.toLowerCase().includes(query)
+    );
+
+    if (!filtered.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty-state";
+      empty.textContent =
+        "No matching skills found. You can add this skill in My Profile.";
+
+      container.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach(skill => {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const heading = document.createElement("h3");
+      heading.textContent = skill;
+
+      const isTeaching = profile.teach.some(item =>
+        item.toLowerCase() === skill.toLowerCase()
+      );
+
+      const description = document.createElement("p");
+
+      description.textContent = isTeaching
+        ? "You have added this skill to your teaching skills."
+        : "Add this skill to your learning interests.";
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "primary-btn";
+
+      const alreadyAdded = profile.learn.some(item =>
+        item.toLowerCase() === skill.toLowerCase()
+      );
+
+      button.textContent = alreadyAdded
+        ? "Added to interests"
+        : "I want to learn this";
+
+      button.disabled = alreadyAdded;
+
+      button.addEventListener("click", () => {
+        if (
+          profile.learn.some(
+            item => item.toLowerCase() === skill.toLowerCase()
+          )
+        ) {
+          return;
+        }
+
+        if (profile.learn.length >= 100) {
+          setText(
+            "profileMessage",
+            "You can add up to 100 learning skills."
+          );
+          return;
+        }
+
+        profile.learn.push(skill);
+
+        renderProfile();
+        renderDiscover();
+
+        setText(
+          "profileMessage",
+          '"' + skill + '" added. Click Save Profile to save it to MongoDB.'
+        );
+      });
+
+      card.append(heading, description, button);
+      container.appendChild(card);
+    });
+  }
+
+  document.getElementById("skillSearch").addEventListener("input", renderDiscover);
+
+  document.getElementById("logoutButton").addEventListener("click", () => {
+    sessionStorage.removeItem("skillSwapUser");
+    window.location.replace("login.html");
+  });
+
+  async function loadProfileFromMongoDB() {
+    if (!validUserId) {
+      setText(
+        "profileMessage",
+        "Your user ID is missing or invalid. Please log out and log in again."
+      );
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `/api/profile/${encodeURIComponent(userId)}`
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Could not load profile.");
+      }
+
+      const saved = result.profile || {};
+
+      profile.bio = typeof saved.bio === "string" ? saved.bio : "";
+      profile.teach = cleanSkills(saved.teach);
+      profile.learn = cleanSkills(saved.learn);
+
+      // Availability is stored locally because the current User schema
+      // does not include an availability field.
+      const localProfile = readProfile();
+      profile.availability = localProfile.availability || "Flexible";
+
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(profile));
+      } catch (storageError) {
+        console.warn("Local backup could not be saved:", storageError);
+      }
+
+      renderProfile();
+      renderDiscover();
+    } catch (error) {
+      console.error("Load profile error:", error);
+
+      // Continue displaying locally saved data if the API cannot be reached.
+      renderProfile();
+      renderDiscover();
+
+      setText(
+        "profileMessage",
+        "Could not load from MongoDB. Showing locally saved data if available."
+      );
+    }
+  }
+
+  renderProfile();
+  renderDiscover();
+  loadProfileFromMongoDB();
+});
+</script>
+</body>
+</html>
